@@ -135,8 +135,7 @@ app.post('/numbers/remainder', (req, res) => {
 // booleans
 
 app.post('/booleans/negate', (req, res) => {
-  const { value } = req.body;
-  res.status(200).json({ result: negate(value) });
+  res.status(200).json({ result: negate(req.body.value) });
 });
 
 app.post('/booleans/truthiness', (req, res) => {
@@ -165,31 +164,24 @@ app.get('/booleans/:string/starts-with/:character', (req, res) => {
 // arrays
 
 app.post('/arrays/element-at-index/:index', (req, res) => {
-  const { index } = req.params;
-  const { array } = req.body;
-  res.json({ result: getNthElement(index, array) });
+  res.json({ result: getNthElement(req.params.index, req.body.array) });
 });
 
 app.post('/arrays/to-string', (req, res) => {
-  const { array } = req.body;
-
-  res.json({ result: arrayToCSVString(array) });
+  res.json({ result: arrayToCSVString(req.body.array) });
 });
 
 app.post('/arrays/append', (req, res) => {
-  const { array } = req.body;
-  const { value } = req.body;
-  res.json({ result: addToArray2(value, array) });
+  res.json({ result: addToArray2(req.body.value, req.body.array) });
 });
 
 app.post('/arrays/starts-with-vowel', (req, res) => {
-  const { array } = req.body;
-  res.json({ result: elementsStartingWithAVowel(array) });
+  res.json({ result: elementsStartingWithAVowel(req.body.array) });
 });
 
 app.post('/arrays/remove-element', (req, res) => {
   const index = parseInt(req.query.index, 0);
-  if (req.query.index) {
+  if (index) {
     res.json({ result: removeNthElement2(index, req.body.array) });
   } else {
     res.json({ result: removeNthElement2(0, req.body.array) });
